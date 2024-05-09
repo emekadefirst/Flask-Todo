@@ -3,6 +3,10 @@ from flask import render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user, login_manager
 from flask_login import current_user, LoginManager
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+
 
 app.secret_key = 'sdhdjflebifueq'
 
@@ -95,6 +99,12 @@ def logout():
     return redirect(url_for('login'))  # Redirect to the login endpoint
 
 
+admin = Admin(app, name='', template_mode='bootstrap3')
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Todo, db.session))
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
