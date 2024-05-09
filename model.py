@@ -20,6 +20,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
     todo = db.relationship('Todo')
-    
+   
 with app.app_context():
     db.create_all()

@@ -1,14 +1,17 @@
 from model import db, app, Todo, User
 from flask import render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user, current_user, login_manager
-from flask_login import current_user, LoginManager
+from flask_login import login_user, login_required, logout_user, current_user, login_manager, LoginManager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-
-app.secret_key = 'sdhdjflebifueq'
+key = os.environ.get('app_key')
+app.secret_key = key
 
 login_manager = LoginManager()
 
