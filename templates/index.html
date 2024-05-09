@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='js/index.js') }}"
+    />
+    <title>Todo || Home </title>
+    <style>
+      .container {
+        width: 50%;
+        background-color: teal;
+        margin: 0 auto;
+        font-family: sans-serif;
+        padding: 5px 20px;
+      }
+
+      form {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .task-input {
+        height: 40px;
+        margin-left: 10px;
+        width: 60%;
+        padding-left: 20px;
+      }
+      .add-button {
+        margin-left: 20px;
+        width: 10%;
+        height: 40px;
+        border: none;
+        color: brown;
+        border-radius: 5px;
+      }
+      .task-item {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        margin-bottom: 10px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .task-item .task-content {
+        flex: 1;
+      }
+      label {
+        margin-left: 10px;
+      }
+      .delete-form {
+        margin-top: 20px;
+        margin-left: 10px;
+      }
+      .de {
+        padding: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      .up {
+        background-color: rgb(37, 203, 224);
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+      }
+      .delete-all-button {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .task-date {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>To-Do List  for {{ current_user.username }}</h1>
+      <div class="task-container">
+        <form method="POST">
+          <input
+            type="text"
+            name="data"
+            class="task-input"
+            placeholder="Add a new task"
+          />
+          <input
+            type="date"
+            name="date"
+            class="task-input"
+            placeholder="Select a date"
+          />
+          <button type="submit" class="add-button">Add</button>
+        </form>
+      </div>
+      <h2>Todo:</h2>
+      <ul class="task-list">
+        {% for todo in todos %}
+        <li class="task-item">
+          <div class="task-content">
+            <button class="up">
+              <a href="/update/{{ todo.id }}">Update</a>
+            </button>
+            <label for="task{{ todo.id }}"></label>
+          </div>
+
+          <span class="task-date">{{ todo.data }}</span>
+          <form
+            class="delete-form"
+            method="POST"
+          >
+            <a href="/delete/{{ todo.id }}" class="de">Delete</a>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+        <form method="POST" action="{{ url_for('logout') }}">
+            <button type="submit" class="delete-all-button">Logout</button>
+        </form>
+    </div>
+  </body>
+</html>
+
+
